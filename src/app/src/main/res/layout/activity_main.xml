@@ -20,8 +20,8 @@
         android:text="@string/inventory_app"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/horGuideline1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/login"
@@ -31,8 +31,8 @@
         android:hint="@string/default_login"
         android:inputType="text"
         android:textSize="20sp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/horGuideline1" />
 
     <EditText
@@ -43,30 +43,30 @@
         android:hint="@string/default_password"
         android:inputType="textPassword"
         android:textSize="20sp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:text="@string/login_button"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
         android:id="@+id/loginError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
         android:text="@string/login_error"
         android:textColor="#FF0000"
+        android:textSize="15sp"
         android:visibility="invisible"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

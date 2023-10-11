@@ -24,11 +24,14 @@ class MainActivity : AppCompatActivity() {
         loginButton.setOnClickListener{
             if(login.text.toString()==UserInfo.login && password.text.toString()==UserInfo.password) {
                 val intent = Intent(this@MainActivity, Menu::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
+                finish()
             }
             else{
                 val loginError = findViewById<TextView>(R.id.loginError)
                 loginError.visibility = View.VISIBLE
+
             }
         }
 
