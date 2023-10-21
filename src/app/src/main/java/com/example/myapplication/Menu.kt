@@ -36,7 +36,7 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, StartInventoryFragment()).commit()
+                .replace(R.id.fragment_container, StartBarcodeInventoryFragment()).commit()
             navigationView.setCheckedItem(R.id.nav_start_inventory)
         }
     }
@@ -45,7 +45,7 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         when (item.itemId) {
             R.id.nav_start_inventory -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, StartInventoryFragment()).commit()
+                    .replace(R.id.fragment_container, StartBarcodeInventoryFragment()).commit()
             }
             R.id.nav_settings -> {
                 supportFragmentManager.beginTransaction()
