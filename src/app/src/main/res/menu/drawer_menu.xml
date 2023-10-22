@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_start_inventory"
             android:icon="@drawable/ic_warehouse"
-            android:title="@string/start__barcode_inventory" />
+            android:title="@string/start_barcode_inventory" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"

@@ -67,6 +67,7 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         return true
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
