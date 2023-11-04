@@ -16,6 +16,7 @@
     <string name="leaving_options">Leaving options</string>
     <string name="my_name">Marcin Dorożyński 259295</string>
     <string name="scan">Scan</string>
-    <string name="no_barcode">No barcode found</string>
+    <string name="reset">Reset</string>
+    <string name="no_barcode">No new barcode found</string>
     <string name="apply_changes">Apply changes</string>
 </resources>
