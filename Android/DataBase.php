@@ -67,6 +67,30 @@ class DataBase
         } else return false;
     }
 
+    function findProduct($table,$barcode)
+    {
+        $barcode = $this->prepareData($barcode);
+        $this->sql = "SELECT * FROM " . $table . " WHERE barcode = '" . $barcode . "'";
+        $result = mysqli_query($this->connect, $this->sql);
+        return $result;
+    }
+    
+    function correctProductNumber($table, $barcode, $number) {
+        $barcode = $this->prepareData($barcode);
+        $number = $this->prepareData($number);$this->sql = "select * from " . $table . " where barcode = '" . $barcode . "'";
+        $result = mysqli_query($this->connect, $this->sql);
+        if ( mysqli_num_rows($result) == 0){
+            return false;
+        }
+        $this->sql = "UPDATE " . $table . " SET total_number = '" . $number . "' WHERE barcode = '" . $barcode . "'";
+        if (mysqli_query($this->connect, $this->sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+
 }
 
 ?>

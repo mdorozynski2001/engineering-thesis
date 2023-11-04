@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     data[0] = login
                     data[1] = password
                     val putData = PutData(
-                        "http://192.168.0.38/Android/login.php",
+                        "http://192.168.0.201/Android/login.php",
                         "POST",
                         field,
                         data

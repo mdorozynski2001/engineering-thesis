@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Paź 29, 2023 at 12:45 PM
+-- Generation Time: Lis 04, 2023 at 02:23 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `inventory_app`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `barcode` bigint(11) NOT NULL,
+  `total_number` int(11) NOT NULL,
+  `price` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `barcode`, `total_number`, `price`) VALUES
+(1, 'AquaFresh triple protection', 5908311868447, 8, 4.99),
+(2, 'Camembert', 4337185526046, 4, 6.99);
 
 -- --------------------------------------------------------
 
@@ -48,6 +70,14 @@ INSERT INTO `users` (`id`, `name`, `surname`, `username`, `password`, `level`) V
 --
 
 --
+-- Indeksy dla tabeli `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `barcode` (`barcode`),
+  ADD UNIQUE KEY `name` (`name`) USING HASH;
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
@@ -57,6 +87,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
