@@ -14,10 +14,7 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData
 import java.math.BigInteger
 import java.security.MessageDigest
 
-object UserInfo {
-    var login: String = "login"
-    var password: String = calculateMd5("password")
-}
+
 
 fun calculateMd5(password: String): String {
     val md = MessageDigest.getInstance("MD5")

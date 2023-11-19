@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.databinding.ActivityBarcodeInventoryBinding
+import com.example.myapplication.databinding.ActivityFastBarcodeInventoryBinding
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -19,16 +19,10 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData
 import java.io.IOException
 
 
-data class Product(
-    val id: String,
-    val name: String,
-    val barcode: String,
-    val total_number: String,
-    val price: String,
-)
+
 
 class BarcodeInventory : AppCompatActivity() {
-    private lateinit var binding: ActivityBarcodeInventoryBinding
+    private lateinit var binding: ActivityFastBarcodeInventoryBinding
     private lateinit var barcodeDetector: BarcodeDetector
     private lateinit var cameraSource: CameraSource
     var collectedBarcode = ""
@@ -37,7 +31,7 @@ class BarcodeInventory : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityBarcodeInventoryBinding.inflate(layoutInflater)
+        binding = ActivityFastBarcodeInventoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.scanButton.setOnClickListener {
@@ -49,7 +43,7 @@ class BarcodeInventory : AppCompatActivity() {
                 binding.numberInDatabase.text = "x"
                 binding.numberReal.hint = "x"
                 activeBarcode = ""
-                
+
 
 
                 binding.applyButton.isEnabled = false
@@ -62,36 +56,48 @@ class BarcodeInventory : AppCompatActivity() {
 
                 val handler = Handler(Looper.getMainLooper())
                 handler.post {
-                    val field = arrayOfNulls<String>(2)
-                    field[0] = "table"
-                    field[1] = "barcode"
+                    val field = arrayOfNulls<String>(3)
+                    field[0] = "InventoryTargetType"
+                    field[1] = "InventoryTargetName"
+                    field[2] = "barcode"
 
-                    val data = arrayOfNulls<String>(2)
-                    data[0] = "products"
-                    data[1] = previousBbarcode
+                    val data = arrayOfNulls<String>(3)
+                    data[0] = Config.activeInventoryTargetType
+                    data[1] = Config.activeInventoryTargetName
+                    data[2] = previousBbarcode
 
                     val putData = PutData(
-                        "http://192.168.0.201/Android/findProduct.php", "POST", field, data
+                        "http://192.168.0.201/Android/findProductInventory.php", "POST", field, data
                     )
 
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             val result = putData.result
-                            if (result == "Barcode doesn't exist") {
+                            if (result == "Barcode doesn't exist" || result == "Error: Database connection" || result == "All fields are required") {
                                 Toast.makeText(this@BarcodeInventory, result, Toast.LENGTH_SHORT)
                                     .show()
+                                Log.i("PutData", result)
 
                                 binding.nameText.text = "x"
                                 binding.numberInDatabase.text = "x"
                                 binding.applyButton.isEnabled = false
                             } else {
+                                Log.i("PutData", result)
 
                                 val gson = Gson()
                                 val product = gson.fromJson<List<Map<String, String>>>(
                                     result, object : TypeToken<List<Map<String, String>>>() {}.type
                                 )
-                                binding.nameText.text = product[0]["name"]
-                                binding.numberInDatabase.text = product[0]["total_number"]
+                                ActiveProduct.id = product[0]["id"]!!.toInt()
+                                ActiveProduct.name = product[0]["name"].toString()
+                                ActiveProduct.barcode = product[0]["barcode"].toString()
+                                ActiveProduct.number = product[0]["number"]!!.toInt()
+                                ActiveProduct.totalNumber = product[0]["total_number"]!!.toInt()
+                                ActiveProduct.price = product[0]["price"]!!.toDouble()
+
+
+                                binding.nameText.text = ActiveProduct.name
+                                binding.numberInDatabase.text = ActiveProduct.number.toString()
                                 binding.applyButton.isEnabled = true
                             }
                         }
@@ -105,18 +111,20 @@ class BarcodeInventory : AppCompatActivity() {
             if (realNumber.toInt() >= 0) {
                 val handler = Handler(Looper.getMainLooper())
                 handler.post {
-                    val field = arrayOfNulls<String>(3)
-                    field[0] = "table"
-                    field[1] = "barcode"
-                    field[2] = "number"
+                    val field = arrayOfNulls<String>(4)
+                    field[0] = "InventoryTargetType"
+                    field[1] = "InventoryTargetName"
+                    field[2] = "barcode"
+                    field[3] = "number"
 
-                    val data = arrayOfNulls<String>(3)
-                    data[0] = "products"
-                    data[1] = collectedBarcode
-                    data[2] = realNumber
+                    val data = arrayOfNulls<String>(4)
+                    data[0] = Config.activeInventoryTargetType
+                    data[1] = Config.activeInventoryTargetName
+                    data[2] = collectedBarcode
+                    data[3] = realNumber
 
                     val putData = PutData(
-                        "http://192.168.0.201/Android/correctProductNumber.php", "POST", field, data
+                        "http://192.168.0.201/Android/correctProductNumber2.php", "POST", field, data
                     )
 
                     if (putData.startPut()) {
@@ -127,6 +135,11 @@ class BarcodeInventory : AppCompatActivity() {
                                     .show()
                                 Log.i("PutData", result)
                                 binding.numberInDatabase.text = realNumber
+                            }
+                            else {
+                                Toast.makeText(this@BarcodeInventory, result, Toast.LENGTH_SHORT)
+                                    .show()
+                                Log.i("PutData", result)
                             }
                         }
                     }
