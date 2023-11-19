@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lis 04, 2023 at 02:23 PM
+-- Generation Time: Lis 19, 2023 at 01:34 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -24,6 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `productions`
+--
+
+CREATE TABLE `productions` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `production_type` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `productions`
+--
+
+INSERT INTO `productions` (`id`, `name`, `production_type`) VALUES
+(1, 'production_1', 'production'),
+(2, 'subcontractor_1', 'subcontractor');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `productions_details`
+--
+
+CREATE TABLE `productions_details` (
+  `id` int(11) NOT NULL,
+  `production_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `productions_details`
+--
+
+INSERT INTO `productions_details` (`id`, `production_id`, `product_id`, `number`) VALUES
+(1, 1, 3, 8),
+(2, 2, 4, 6);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `products`
 --
 
@@ -40,8 +81,30 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `barcode`, `total_number`, `price`) VALUES
-(1, 'AquaFresh triple protection', 5908311868447, 8, 4.99),
-(2, 'Camembert', 4337185526046, 4, 6.99);
+(1, 'AquaFresh triple protection', 5908311868447, 10, 4.99),
+(2, 'Camembert', 4337185526046, 10, 6.99),
+(3, 'milk', 8718951313255, 16, 2.99),
+(4, 'flour', 4056489805175, 6, 2.99);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `technology_table`
+--
+
+CREATE TABLE `technology_table` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `semi_product_id` int(11) NOT NULL,
+  `semi_product_number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `technology_table`
+--
+
+INSERT INTO `technology_table` (`id`, `product_id`, `semi_product_id`, `semi_product_number`) VALUES
+(1, 2, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -63,11 +126,68 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `username`, `password`, `level`) VALUES
-(2, 'Marcin', 'Dorożyński', 'marcin', 'd5fad0cda8f1079681ec510bb20a586c', 'admin');
+(1, 'Marcin', 'Dorożyński', 'marcin', 'd5fad0cda8f1079681ec510bb20a586c', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `warehouses`
+--
+
+CREATE TABLE `warehouses` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `warehouses`
+--
+
+INSERT INTO `warehouses` (`id`, `name`) VALUES
+(1, 'warehouse_1'),
+(2, 'warehouse_2');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `warehouses_details`
+--
+
+CREATE TABLE `warehouses_details` (
+  `id` int(11) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `warehouses_details`
+--
+
+INSERT INTO `warehouses_details` (`id`, `warehouse_id`, `product_id`, `number`) VALUES
+(1, 1, 1, 10),
+(2, 1, 2, 6),
+(3, 2, 2, 4),
+(4, 2, 3, 8);
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `productions`
+--
+ALTER TABLE `productions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indeksy dla tabeli `productions_details`
+--
+ALTER TABLE `productions_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prod_details_production_id` (`production_id`),
+  ADD KEY `prod_details_product_id` (`product_id`);
 
 --
 -- Indeksy dla tabeli `products`
@@ -78,6 +198,14 @@ ALTER TABLE `products`
   ADD UNIQUE KEY `name` (`name`) USING HASH;
 
 --
+-- Indeksy dla tabeli `technology_table`
+--
+ALTER TABLE `technology_table`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `technology_product_id` (`product_id`),
+  ADD KEY `technology_semi_product_id` (`semi_product_id`);
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
@@ -85,20 +213,90 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `login` (`username`);
 
 --
+-- Indeksy dla tabeli `warehouses`
+--
+ALTER TABLE `warehouses`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indeksy dla tabeli `warehouses_details`
+--
+ALTER TABLE `warehouses_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `WH_detail_product_id` (`product_id`),
+  ADD KEY `WH_detail_warehouse_id` (`warehouse_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `productions`
+--
+ALTER TABLE `productions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `productions_details`
+--
+ALTER TABLE `productions_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `technology_table`
+--
+ALTER TABLE `technology_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `warehouses`
+--
+ALTER TABLE `warehouses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `warehouses_details`
+--
+ALTER TABLE `warehouses_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `productions_details`
+--
+ALTER TABLE `productions_details`
+  ADD CONSTRAINT `prod_details_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `prod_details_production_id` FOREIGN KEY (`production_id`) REFERENCES `productions` (`id`);
+
+--
+-- Constraints for table `technology_table`
+--
+ALTER TABLE `technology_table`
+  ADD CONSTRAINT `technology_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `technology_semi_product_id` FOREIGN KEY (`semi_product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `warehouses_details`
+--
+ALTER TABLE `warehouses_details`
+  ADD CONSTRAINT `WH_detail_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `WH_detail_warehouse_id` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
