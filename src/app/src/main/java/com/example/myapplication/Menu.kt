@@ -36,7 +36,7 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, StartFastInventoryFragment()).commit()
+                .replace(R.id.fragment_container, WelcomeFragment()).commit()
             navigationView.setCheckedItem(R.id.nav_start_inventory)
         }
     }

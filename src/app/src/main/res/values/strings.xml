@@ -16,6 +16,8 @@
     <string name="exit">Exit</string>
     <string name="leaving_options">Leaving options</string>
     <string name="my_name">Marcin Dorożyński 259295</string>
+    <string name="supervisor">Engineering thesis supervisor:\ndr inż. Marek Piasecki</string>
+    <string name="pwr_2023">Politechnika Wrocławska 2023</string>
     <string name="scan">Scan</string>
     <string name="reset">Reset</string>
     <string name="no_barcode">No new barcode found</string>
@@ -35,5 +37,7 @@
         Just click scan, enter correct number and press APPlY button to save changes.</string>
     <string name="fast_innventory_description">Choose warehouse or production object and press Start.
     On next screen you can scan product and then you will see its name and number in database. If real number is different you can correct it by putting number to box and press "APPLY CHANGES" button.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
