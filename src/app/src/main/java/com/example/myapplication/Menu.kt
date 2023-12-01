@@ -36,7 +36,7 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, StartBarcodeInventoryFragment()).commit()
+                .replace(R.id.fragment_container, StartFastInventoryFragment()).commit()
             navigationView.setCheckedItem(R.id.nav_start_inventory)
         }
     }
@@ -45,11 +45,11 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
         when (item.itemId) {
             R.id.nav_start_inventory -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, StartBarcodeInventoryFragment()).commit()
+                    .replace(R.id.fragment_container, StartFastInventoryFragment()).commit()
             }
             R.id.nav_settings -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, SettingsFragment()).commit()
+                    .replace(R.id.fragment_container, StartComplexInventoryFragment()).commit()
             }
             R.id.nav_logout -> {
                 Toast.makeText(this@Menu, "Logout", Toast.LENGTH_SHORT).show()

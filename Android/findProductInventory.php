@@ -1,11 +1,11 @@
 <?php
 require "DataBase.php";
 $db = new DataBase();
-if (isset($_POST['InventoryTargetType']) && isset($_POST['InventoryTargetName']) && isset($_POST['barcode'])) {
+if (isset($_POST['InventoryTargetType']) && isset($_POST['InventoryID']) && isset($_POST['barcode'])&& isset($_POST['productInfo'])) {
     if ($db->dbConnect()) {
-        $result = $db->findProductInventory($_POST['InventoryTargetType'], $_POST['InventoryTargetName'], $_POST['barcode']);
+        $result = $db->findProductInventory($_POST['InventoryTargetType'], $_POST['InventoryID'], $_POST['barcode'], $_POST['productInfo']);
         if ($result != NULL){
-            if ($result["barcode"] == $_POST['barcode']) {
+            if ($result[$_POST['productInfo']] ==$_POST['barcode']) {
                 $data = array();
                 $data[] = $result;
                 echo json_encode($data);
