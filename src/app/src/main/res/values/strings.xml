@@ -9,7 +9,7 @@
     <string name="login_error">Wrong login or password</string>
     <string name="navigation_drawer_closed">Navigation drawer closed</string>
     <string name="navigation_drawer_open">Navigation drawer open</string>
-    <string name="settings">Settings</string>
+    <string name="complex_inventory">Complex inventory</string>
     <string name="start">Start</string>
     <string name="fast_barcode_inventory">Fast barcode inventory</string>
     <string name="logout">Logout</string>
@@ -21,4 +21,19 @@
     <string name="no_barcode">No new barcode found</string>
     <string name="apply_changes">Apply changes</string>
     <string name="choose_warehous_production">Choose warehouse/production</string>
+    <string name="all_products">All products</string>
+    <string name="random_products">Random products</string>
+    <string name="random_products_number">Random products number</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="number_in_db">Number in database</string>
+    <string name="real_number">Real number</string>
+    <string name="x">XXXXXXXXXXX</string>
+    <string name="no_product">No product</string>
+    <string name="complex_inventory_description">Choose warehouse or production object. Choose if you want check all products or only random part of them. Put number of products you want to check.Press start to enter complex inventory activity.
+        On next screen you can switch between products. You will see products name and barcode. After successful comparing it with real product using scaner you will be able to corect number in database.
+        Just click scan, enter correct number and press APPlY button to save changes.</string>
+    <string name="fast_innventory_description">Choose warehouse or production object and press Start.
+    On next screen you can scan product and then you will see its name and number in database. If real number is different you can correct it by putting number to box and press "APPLY CHANGES" button.</string>
+
 </resources>

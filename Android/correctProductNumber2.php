@@ -1,9 +1,9 @@
 <?php
 require "DataBase.php";
 $db = new DataBase();
-if (isset($_POST['InventoryTargetType']) && isset($_POST['InventoryTargetName']) && isset($_POST['barcode']) && isset($_POST['number'])) {
+if (isset($_POST['InventoryTargetType']) && isset($_POST['InventoryID']) && isset($_POST['product_id']) && isset($_POST['number'])) {
     if ($db->dbConnect()) {
-        if ($db->correctProductNumber2($_POST['InventoryTargetType'], $_POST['InventoryTargetName'], $_POST['barcode'], $_POST['number'])) {
+        if ($db->correctProductNumber2($_POST['InventoryTargetType'], $_POST['InventoryID'], $_POST['product_id'], $_POST['number'])) {
             echo "Correction succeeded";
         } else {
             echo "Correction failed";
