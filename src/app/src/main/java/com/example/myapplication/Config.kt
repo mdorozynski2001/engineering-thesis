@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+var IpGlobal = ""
+
 object ActiveInventory {
     var id : Int = -1
     var name : String = ""

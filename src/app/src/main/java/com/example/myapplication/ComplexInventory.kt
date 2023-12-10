@@ -125,7 +125,7 @@ class ComplexInventory : AppCompatActivity() {
         data[3] = "id"
 
         val putData = PutData(
-            "http://192.168.0.201/Android/findProductInventory.php", "POST", field, data
+            "http://$IpGlobal/Android/findProductInventory.php", "POST", field, data
         )
 
         if (putData.startPut()) {

@@ -65,7 +65,7 @@ class FastInventory : AppCompatActivity() {
                 data[3] = "barcode"
 
                 val putData = PutData(
-                    "http://192.168.0.201/Android/findProductInventory.php", "POST", field, data
+                    "http://$IpGlobal/Android/findProductInventory.php", "POST", field, data
                 )
 
                 if (putData.startPut()) {

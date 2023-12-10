@@ -18,7 +18,7 @@ suspend fun getTableNamesList(table: String): Array<String> {
         val data = arrayOfNulls<String>(1)
         data[0] = table
         val putDataWarehouse = PutData(
-            "http://192.168.0.201/Android/getTableList.php",
+            "http://$IpGlobal/Android/getTableList.php",
             "POST",
             field,
             data
@@ -53,7 +53,7 @@ fun getInventoryId(): Boolean {
     data[0] = ActiveInventory.type
     data[1] = ActiveInventory.name
     val putData = PutData(
-        "http://192.168.0.201/Android/getInventoryTargetData.php",
+        "http://$IpGlobal/Android/getInventoryTargetData.php",
         "POST",
         field,
         data
@@ -87,7 +87,7 @@ fun calculateProductsNumberInInventoryTarget(): Boolean {
     data[0] = ActiveInventory.type
     data[1] = ActiveInventory.id.toString()
     val putData = PutData(
-        "http://192.168.0.201/Android/getProductNumberInInventoryTarget.php",
+        "http://$IpGlobal/Android/getProductNumberInInventoryTarget.php",
         "POST",
         field,
         data
@@ -115,7 +115,7 @@ fun getProductsFromInventoryTarget(): Boolean {
     data[0] = ActiveInventory.type
     data[1] = ActiveInventory.id.toString()
     val putData = PutData(
-        "http://192.168.0.201/Android/getProductsFromInventoryTarget.php",
+        "http://$IpGlobal/Android/getProductsFromInventoryTarget.php",
         "POST",
         field,
         data
@@ -173,7 +173,7 @@ fun correctProductNumber(context: Context, realNumber: String, id: Int): Boolean
         data[3] = realNumber
 
         val putData = PutData(
-            "http://192.168.0.201/Android/correctProductNumber2.php", "POST", field, data
+            "http://$IpGlobal/Android/correctProductNumber2.php", "POST", field, data
         )
 
         if (putData.startPut()) {

@@ -30,12 +30,14 @@ class MainActivity : AppCompatActivity() {
 
         val inputLogin = findViewById<EditText>(R.id.login)
         val inputPassword = findViewById<EditText>(R.id.password)
+        val inputIP = findViewById<EditText>(R.id.ip)
         val loginButton = findViewById<Button>(R.id.loginButton)
         val loginError = findViewById<TextView>(R.id.loginError)
 
         loginButton.setOnClickListener {
             val login = inputLogin.text.toString()
             val password = calculateMd5(inputPassword.text.toString())
+            val ip = inputIP.text.toString()
 
             if (login != "" && password != "") {
                 val handler = Handler(Looper.getMainLooper())
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     data[0] = login
                     data[1] = password
                     val putData = PutData(
-                        "http://192.168.0.201/Android/login.php",
+                        "http://$ip/Android/login.php",
                         "POST",
                         field,
                         data
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                         if (putData.onComplete()) {
                             val result = putData.result
                             if (result == "Login Success") {
+                                IpGlobal = ip
                                 val intent = Intent(this@MainActivity, Menu::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 startActivity(intent)
