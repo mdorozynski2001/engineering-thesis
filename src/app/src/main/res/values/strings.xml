@@ -2,8 +2,10 @@
     <string name="app_name">My Application</string>
     <string name="default_login">login</string>
     <string name="default_password">password</string>
+    <string name="default_ip">192.168.0.201</string>
     <string name="login_hint">Enter login</string>
     <string name="password_hint">Enter password</string>
+    <string name="ip_hint">Enter server IP</string>
     <string name="login_button">Log in</string>
     <string name="inventory_app">Inventory app</string>
     <string name="login_error">Wrong login or password</string>

@@ -47,6 +47,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />
 
+    <EditText
+        android:id="@+id/ip"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/ip_hint"
+        android:text="@string/default_ip"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
@@ -55,7 +67,7 @@
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/ip" />
 
     <TextView
         android:id="@+id/loginError"
