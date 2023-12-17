@@ -38,8 +38,8 @@ class FastInventory : AppCompatActivity() {
                     .show()
                 binding.barcode.text = getString(R.string.no_barcode)
                 binding.nameText.text = "x"
-                binding.numberInDatabase.text = "x"
-                binding.numberReal.hint = "x"
+                binding.amountInDatabase.text = "x"
+                binding.amountReal.hint = "x"
                 activeBarcode = ""
 
 
@@ -75,7 +75,7 @@ class FastInventory : AppCompatActivity() {
                             Log.i("PutData", result)
 
                             binding.nameText.text = "x"
-                            binding.numberInDatabase.text = "x"
+                            binding.amountInDatabase.text = "x"
                             binding.applyButton.isEnabled = false
                         } else {
                             Log.i("PutData", result)
@@ -87,13 +87,13 @@ class FastInventory : AppCompatActivity() {
                             ActiveProduct.id = product[0]["id"]!!.toInt()
                             ActiveProduct.name = product[0]["name"].toString()
                             ActiveProduct.barcode = product[0]["barcode"].toString()
-                            ActiveProduct.number = product[0]["number"]!!.toInt()
-                            ActiveProduct.totalNumber = product[0]["total_number"]!!.toInt()
+                            ActiveProduct.amount = product[0]["amount"]!!.toInt()
+                            ActiveProduct.totalAmount = product[0]["total_amount"]!!.toInt()
                             ActiveProduct.price = product[0]["price"]!!.toDouble()
 
 
                             binding.nameText.text = ActiveProduct.name
-                            binding.numberInDatabase.text = ActiveProduct.number.toString()
+                            binding.amountInDatabase.text = ActiveProduct.amount.toString()
                             binding.applyButton.isEnabled = true
                         }
                     }
@@ -102,9 +102,9 @@ class FastInventory : AppCompatActivity() {
         }
 
         binding.applyButton.setOnClickListener {
-            val realNumber = binding.numberReal.text.toString()
-            if(correctProductNumber(this@FastInventory, realNumber, ActiveProduct.id)){
-                binding.numberInDatabase.text = realNumber
+            val realAmount = binding.amountReal.text.toString()
+            if(correctProductAmount(this@FastInventory, realAmount, ActiveProduct.id)){
+                binding.amountInDatabase.text = realAmount
             }
         }
     }

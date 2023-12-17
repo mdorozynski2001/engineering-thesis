@@ -58,12 +58,12 @@ class StartComplexInventoryFragment : Fragment() {
             when (id) {
                 R.id.radioButtonAllProducts -> {
                     binding.button.isEnabled = true
-                    binding.randomProductsNumber.isEnabled = false
+                    binding.randomProductsAmount.isEnabled = false
                     ActiveInventory.allOrRandomProducts = "AllProducts"
                 }
                 R.id.radioButtonRandomProducts -> {
                     binding.button.isEnabled = true
-                    binding.randomProductsNumber.isEnabled = true
+                    binding.randomProductsAmount.isEnabled = true
                     ActiveInventory.allOrRandomProducts = "RandomProducts"
                 }
             }
@@ -87,25 +87,25 @@ class StartComplexInventoryFragment : Fragment() {
                 if (getProductsFromInventoryTarget()) {
                     when (ActiveInventory.allOrRandomProducts) {
                         "AllProducts" -> {
-                            ActiveInventory.productsNumberToInventory = ActiveInventory.productsNumberTotal
+                            ActiveInventory.productsAmountToInventory = ActiveInventory.productsAmountTotal
                             requestCamera?.launch(android.Manifest.permission.CAMERA)
                         }
                         "RandomProducts" -> {
-                            val number = binding.randomProductsNumber.text.toString()
-                            if (number.isNotEmpty()) {
-                                if (number.toInt() > 0) {
-                                    ActiveInventory.productsNumberToInventory =
-                                        min(number.toInt(), ActiveInventory.productsNumberTotal)
-                                    val randomNumbers = mutableSetOf<Int>()
+                            val amount = binding.randomProductsAmount.text.toString()
+                            if (amount.isNotEmpty()) {
+                                if (amount.toInt() > 0) {
+                                    ActiveInventory.productsAmountToInventory =
+                                        min(amount.toInt(), ActiveInventory.productsAmountTotal)
+                                    val randomAmounts = mutableSetOf<Int>()
 
-                                    while (randomNumbers.size < ActiveInventory.productsNumberToInventory) {
-                                        val randomNumber = Random.nextInt(
+                                    while (randomAmounts.size < ActiveInventory.productsAmountToInventory) {
+                                        val randomAmount = Random.nextInt(
                                             0,
-                                            ActiveInventory.productsNumberTotal
+                                            ActiveInventory.productsAmountTotal
                                         )
-                                        randomNumbers.add(randomNumber)
+                                        randomAmounts.add(randomAmount)
                                     }
-                                    ActiveInventory.productsIDsInList = randomNumbers.toList()
+                                    ActiveInventory.productsIDsInList = randomAmounts.toList()
                                     Log.i(
                                         "PutData",
                                         "Chosen products ids: ${ActiveInventory.productsIDsInList}"
@@ -116,7 +116,7 @@ class StartComplexInventoryFragment : Fragment() {
                         }
                     }
                 } else {
-                    Log.i("PutData", "Calculating total product number failed")
+                    Log.i("PutData", "Calculating total product amount failed")
                 }
             } else {
                 Log.i("PutData", "ID not found")

@@ -95,12 +95,12 @@ fun getProductsFromInventoryTarget(): Boolean {
             val result = putData.result
             if (result != "Inventory target is empty") {
 
-                Log.i("PutData", "getProductNumberInInventoryTarget $result")
+                Log.i("PutData", "getProductAmountInInventoryTarget $result")
                 val gson = Gson()
                 val products = gson.fromJson<List<Map<String, String>>>(
                     result, object : TypeToken<List<Map<String, String>>>() {}.type
                 )
-                ActiveInventory.productsNumberTotal = products.size
+                ActiveInventory.productsAmountTotal = products.size
                 val productIdList = emptyList<Int>().toMutableList()
                 for(product in products){
                     productIdList += product["product_id"]!!.toInt()
@@ -109,7 +109,7 @@ fun getProductsFromInventoryTarget(): Boolean {
                 Log.i("PutData","productIDs: ${ActiveInventory.productsIDs}")
                 funResult = true
             }
-            Log.i("PutData", "getProductNumberInInventoryTarget $result")
+            Log.i("PutData", "getProductAmountInInventoryTarget $result")
         }
     }
     return funResult
@@ -121,27 +121,27 @@ fun jsonToProduct(product_json: Map<String, String>): Product {
         id = product_json["id"]!!.toInt(),
         name = product_json["name"].toString(),
         barcode = product_json["barcode"].toString(),
-        number = product_json["number"]!!.toInt(),
-        totalNumber = product_json["total_number"]!!.toInt(),
+        amount = product_json["amount"]!!.toInt(),
+        totalAmount = product_json["total_amount"]!!.toInt(),
         price = product_json["price"]!!.toDouble()
     )
 }
 
-fun correctProductNumber(context: Context, realNumber: String, id: Int): Boolean {
+fun correctProductAmount(context: Context, realAmount: String, id: Int): Boolean {
     var funResult = false
-    if (realNumber.toInt() >= 0) {
+    if (realAmount.toInt() >= 0) {
         val field = arrayOfNulls<String>(3)
         field[0] = "InventoryID"
         field[1] = "product_id"
-        field[2] = "number"
+        field[2] = "amount"
 
         val data = arrayOfNulls<String>(3)
         data[0] = ActiveInventory.id.toString()
         data[1] = id.toString()
-        data[2] = realNumber
+        data[2] = realAmount
 
         val putData = PutData(
-            "http://$IpGlobal/Android/correctProductNumber.php", "POST", field, data
+            "http://$IpGlobal/Android/correctProductAmount.php", "POST", field, data
         )
 
         if (putData.startPut()) {
