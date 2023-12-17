@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Inventory app</string>
     <string name="default_login">login</string>
     <string name="default_password">password</string>
     <string name="default_ip">192.168.0.201</string>

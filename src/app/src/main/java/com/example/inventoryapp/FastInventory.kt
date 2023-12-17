@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.inventoryapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.databinding.ActivityFastInventoryBinding
+import com.example.inventoryapp.databinding.ActivityFastInventoryBinding
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -55,8 +55,8 @@ class FastInventory : AppCompatActivity() {
                 val field = arrayOfNulls<String>(4)
                 field[0] = "InventoryTargetType"
                 field[1] = "InventoryID"
-                field[2] = "barcode"
-                field[3] = "productInfo"
+                field[2] = "productInfo"
+                field[3] = "productInfoType"
 
                 val data = arrayOfNulls<String>(4)
                 data[0] = ActiveInventory.type
@@ -65,7 +65,7 @@ class FastInventory : AppCompatActivity() {
                 data[3] = "barcode"
 
                 val putData = PutData(
-                    "http://$IpGlobal/Android/findProductInventory.php", "POST", field, data
+                    "http://$IpGlobal/Android/findProduct.php", "POST", field, data
                 )
 
                 if (putData.startPut()) {

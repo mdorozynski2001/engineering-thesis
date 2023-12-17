@@ -67,22 +67,14 @@ class DataBase
         } else return false;
     }
 
-    function findProduct($table,$barcode)
-    {
-        $barcode = $this->prepareData($barcode);
-        $this->sql = "SELECT * FROM " . $table . " WHERE barcode = '" . $barcode . "'";
-        $result = mysqli_query($this->connect, $this->sql);
-        return $result;
-    }
-
-    function findProductInventory($InventoryTargetType, $InventoryID, $barcode, $productInfo)
+    function findProduct($InventoryTargetType, $InventoryID, $productInfo, $productInfoType)
     {
         $InventoryTargetType = $this->prepareData($InventoryTargetType);
         $InventoryID = $this->prepareData($InventoryID);
-        $barcode = $this->prepareData($barcode);
         $productInfo = $this->prepareData($productInfo);
+        $productInfoType = $this->prepareData($productInfoType);
         
-        $this->sql = "SELECT * FROM products WHERE " .$productInfo. " = '" . $barcode . "'";
+        $this->sql = "SELECT * FROM products WHERE " .$productInfoType. " = '" . $productInfo . "'";
         $product_result = mysqli_query($this->connect, $this->sql);
         if ( mysqli_num_rows($product_result) == 0){
             return NULL;
@@ -115,23 +107,9 @@ class DataBase
 
     }
 
-    
-    function correctProductNumber($table, $barcode, $number) {
-        $barcode = $this->prepareData($barcode);
-        $number = $this->prepareData($number);$this->sql = "select * from " . $table . " where barcode = '" . $barcode . "'";
-        $result = mysqli_query($this->connect, $this->sql);
-        if ( mysqli_num_rows($result) == 0){
-            return false;
-        }
-        $this->sql = "UPDATE " . $table . " SET total_number = '" . $number . "' WHERE barcode = '" . $barcode . "'";
-        if (mysqli_query($this->connect, $this->sql)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    function correctProductNumber2($InventoryTargetType,$InventoryId,$product_id,$number){
+
+    function correctProductNumber($InventoryTargetType,$InventoryId,$product_id,$number){
         $InventoryTargetType = $this->prepareData($InventoryTargetType);
         $InventoryId = $this->prepareData($InventoryId);
         $product_id = $this->prepareData($product_id);
@@ -204,24 +182,6 @@ class DataBase
         return $result;        
     }
 
-    function getProductNumberInInventoryTarget($InventoryTargetType, $InventoryID){
-        $InventoryTargetType = $this->prepareData($InventoryTargetType);
-        $InventoryID = $this->prepareData($InventoryID);
-
-        if($InventoryTargetType == "warehouses"){
-            $detail_string = "warehouses_details";
-            $id_string = "warehouse_id";
-        }else{
-            $detail_string = "productions_details";
-            $id_string = "production_id";
-        }
-
-        $this->sql = "SELECT * from " .$detail_string. " WHERE " .$id_string. " = " .$InventoryID. "";
-        $result = mysqli_query($this->connect, $this->sql);
-        $result_number = mysqli_num_rows($result);
-        return $result_number;
-
-    }
 
     function getProductsFromInventoryTarget($InventoryTargetType, $InventoryId){
         $InventoryTargetType = $this->prepareData($InventoryTargetType);

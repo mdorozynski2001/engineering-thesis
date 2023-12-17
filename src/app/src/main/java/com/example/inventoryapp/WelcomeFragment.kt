@@ -1,11 +1,11 @@
-package com.example.myapplication
+package com.example.inventoryapp
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.myapplication.databinding.FragmentWelcomeBinding
+import com.example.inventoryapp.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
     private lateinit var binding: FragmentWelcomeBinding

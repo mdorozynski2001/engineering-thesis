@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.inventoryapp
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.databinding.FragmentStartComplexInventoryBinding
+import com.example.inventoryapp.databinding.FragmentStartComplexInventoryBinding
 import kotlinx.coroutines.launch
 import java.lang.StrictMath.min
 import kotlin.random.Random
