@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Lis 19, 2023 at 01:34 PM
+-- Generation Time: Dec 17, 2023 at 10:47 AM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `productions` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `production_type` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -70,7 +70,7 @@ INSERT INTO `productions_details` (`id`, `production_id`, `product_id`, `number`
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `name` text NOT NULL,
+  `name` varchar(30) NOT NULL,
   `barcode` bigint(11) NOT NULL,
   `total_number` int(11) NOT NULL,
   `price` float NOT NULL
@@ -81,30 +81,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `barcode`, `total_number`, `price`) VALUES
-(1, 'AquaFresh triple protection', 5908311868447, 10, 4.99),
-(2, 'Camembert', 4337185526046, 10, 6.99),
+(1, 'AquaFresh triple protection', 5908311868447, 12, 4.99),
+(2, 'Camembert', 4337185526046, 9, 6.99),
 (3, 'milk', 8718951313255, 16, 2.99),
-(4, 'flour', 4056489805175, 6, 2.99);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `technology_table`
---
-
-CREATE TABLE `technology_table` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `semi_product_id` int(11) NOT NULL,
-  `semi_product_number` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `technology_table`
---
-
-INSERT INTO `technology_table` (`id`, `product_id`, `semi_product_id`, `semi_product_number`) VALUES
-(1, 2, 3, 2);
+(4, 'flour', 4056489805175, 6, 2.99),
+(5, 'mandarynki', 20599973, 12, 4.99);
 
 -- --------------------------------------------------------
 
@@ -165,10 +146,11 @@ CREATE TABLE `warehouses_details` (
 --
 
 INSERT INTO `warehouses_details` (`id`, `warehouse_id`, `product_id`, `number`) VALUES
-(1, 1, 1, 10),
-(2, 1, 2, 6),
+(1, 1, 1, 12),
+(2, 1, 2, 5),
 (3, 2, 2, 4),
-(4, 2, 3, 8);
+(4, 2, 3, 8),
+(5, 1, 5, 12);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -195,15 +177,7 @@ ALTER TABLE `productions_details`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `barcode` (`barcode`),
-  ADD UNIQUE KEY `name` (`name`) USING HASH;
-
---
--- Indeksy dla tabeli `technology_table`
---
-ALTER TABLE `technology_table`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `technology_product_id` (`product_id`),
-  ADD KEY `technology_semi_product_id` (`semi_product_id`);
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -247,13 +221,7 @@ ALTER TABLE `productions_details`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `technology_table`
---
-ALTER TABLE `technology_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -271,7 +239,7 @@ ALTER TABLE `warehouses`
 -- AUTO_INCREMENT for table `warehouses_details`
 --
 ALTER TABLE `warehouses_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -283,13 +251,6 @@ ALTER TABLE `warehouses_details`
 ALTER TABLE `productions_details`
   ADD CONSTRAINT `prod_details_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `prod_details_production_id` FOREIGN KEY (`production_id`) REFERENCES `productions` (`id`);
-
---
--- Constraints for table `technology_table`
---
-ALTER TABLE `technology_table`
-  ADD CONSTRAINT `technology_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `technology_semi_product_id` FOREIGN KEY (`semi_product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `warehouses_details`
