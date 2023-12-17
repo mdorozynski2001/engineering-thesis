@@ -112,17 +112,15 @@ class ComplexInventory : AppCompatActivity() {
 
         )
 
-        val field = arrayOfNulls<String>(4)
-        field[0] = "InventoryTargetType"
-        field[1] = "InventoryID"
-        field[2] = "productInfo"
-        field[3] = "productInfoType"
+        val field = arrayOfNulls<String>(3)
+        field[0] = "InventoryID"
+        field[1] = "productInfo"
+        field[2] = "productInfoType"
 
-        val data = arrayOfNulls<String>(4)
-        data[0] = ActiveInventory.type
-        data[1] = ActiveInventory.id.toString()
-        data[2] = productInfo.toString()
-        data[3] = "id"
+        val data = arrayOfNulls<String>(3)
+        data[0] = ActiveInventory.id.toString()
+        data[1] = productInfo.toString()
+        data[2] = "id"
 
         val putData = PutData(
             "http://$IpGlobal/Android/findProduct.php", "POST", field, data

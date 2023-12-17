@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class StartFastInventoryFragment : Fragment() {
     private var requestCamera: ActivityResultLauncher<String>? = null
     private lateinit var binding: FragmentStartFastInventoryBinding
-    private var namesArray: Array<String> = emptyArray()
+    private var warehouses: Array<String> = emptyArray()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,16 +27,12 @@ class StartFastInventoryFragment : Fragment() {
         binding = FragmentStartFastInventoryBinding.inflate(inflater, container, false)
 
         lifecycleScope.launch {
-            val warehouses = getTableNamesList("warehouses")
-            val warehousesNumber = warehouses.size
-            val productions = getTableNamesList("productions")
-            namesArray += warehouses
-            namesArray += productions
+            warehouses += getTableNamesList("stock")
 
             val arrayAdapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                namesArray
+                warehouses
             )
             binding.spinner.adapter = arrayAdapter
             binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -46,17 +42,7 @@ class StartFastInventoryFragment : Fragment() {
                     p2: Int,
                     p3: Long
                 ) {
-                    if (p2 < warehousesNumber) {
-                        ActiveInventory.type = "warehouses"
-                    } else {
-                        ActiveInventory.type = "productions"
-                    }
-                    ActiveInventory.name = namesArray[p2]
-                    Toast.makeText(
-                        requireContext(),
-                        ActiveInventory.type,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    ActiveInventory.name = warehouses[p2]
                     binding.button.isEnabled = true
                 }
 

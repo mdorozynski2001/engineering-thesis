@@ -1,9 +1,9 @@
 <?php
 require "DataBase.php";
 $db = new DataBase();
-if (isset($_POST['InventoryTargetType']) && isset($_POST['InventoryId'])) {
+if (isset($_POST['InventoryId'])) {
     if ($db->dbConnect()) {
-        $result = $db->getProductsFromInventoryTarget($_POST['InventoryTargetType'], $_POST['InventoryId']);
+        $result = $db->getProductsFromInventoryTarget($_POST['InventoryId']);
         if ($result->num_rows > 0) {
             $data = array();
     

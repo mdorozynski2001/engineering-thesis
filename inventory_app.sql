@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2023 at 10:47 AM
+-- Generation Time: Dec 17, 2023 at 12:42 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -24,47 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `productions`
---
-
-CREATE TABLE `productions` (
-  `id` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `production_type` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `productions`
---
-
-INSERT INTO `productions` (`id`, `name`, `production_type`) VALUES
-(1, 'production_1', 'production'),
-(2, 'subcontractor_1', 'subcontractor');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `productions_details`
---
-
-CREATE TABLE `productions_details` (
-  `id` int(11) NOT NULL,
-  `production_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `number` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `productions_details`
---
-
-INSERT INTO `productions_details` (`id`, `production_id`, `product_id`, `number`) VALUES
-(1, 1, 3, 8),
-(2, 2, 4, 6);
-
--- --------------------------------------------------------
-
---
 -- Struktura tabeli dla tabeli `products`
 --
 
@@ -81,11 +40,59 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `barcode`, `total_number`, `price`) VALUES
-(1, 'AquaFresh triple protection', 5908311868447, 12, 4.99),
+(1, 'AquaFresh triple protection', 5908311868447, 6, 4.99),
 (2, 'Camembert', 4337185526046, 9, 6.99),
 (3, 'milk', 8718951313255, 16, 2.99),
 (4, 'flour', 4056489805175, 6, 2.99),
 (5, 'mandarynki', 20599973, 12, 4.99);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `stock`
+--
+
+CREATE TABLE `stock` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `type` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`id`, `name`, `type`) VALUES
+(1, 'warehouse_1', 'warehouse'),
+(2, 'warehouse_2', 'warehouse'),
+(3, 'production_1', 'production'),
+(4, 'subcontractor_1', 'subcontractor');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `stock_details`
+--
+
+CREATE TABLE `stock_details` (
+  `id` int(11) NOT NULL,
+  `stock_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `number` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stock_details`
+--
+
+INSERT INTO `stock_details` (`id`, `stock_id`, `product_id`, `number`) VALUES
+(1, 1, 1, 6),
+(2, 1, 2, 5),
+(3, 2, 2, 4),
+(4, 2, 3, 8),
+(5, 1, 5, 12),
+(6, 3, 3, 8),
+(7, 4, 4, 6);
 
 -- --------------------------------------------------------
 
@@ -99,77 +106,19 @@ CREATE TABLE `users` (
   `surname` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `level` varchar(20) NOT NULL
+  `is_active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `username`, `password`, `level`) VALUES
-(1, 'Marcin', 'Dorożyński', 'marcin', 'd5fad0cda8f1079681ec510bb20a586c', 'admin');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `warehouses`
---
-
-CREATE TABLE `warehouses` (
-  `id` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `warehouses`
---
-
-INSERT INTO `warehouses` (`id`, `name`) VALUES
-(1, 'warehouse_1'),
-(2, 'warehouse_2');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `warehouses_details`
---
-
-CREATE TABLE `warehouses_details` (
-  `id` int(11) NOT NULL,
-  `warehouse_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `number` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `warehouses_details`
---
-
-INSERT INTO `warehouses_details` (`id`, `warehouse_id`, `product_id`, `number`) VALUES
-(1, 1, 1, 12),
-(2, 1, 2, 5),
-(3, 2, 2, 4),
-(4, 2, 3, 8),
-(5, 1, 5, 12);
+INSERT INTO `users` (`id`, `name`, `surname`, `username`, `password`, `is_active`) VALUES
+(2, 'Marcin', 'Dorożyński', 'marcin', 'd5fad0cda8f1079681ec510bb20a586c', 1);
 
 --
 -- Indeksy dla zrzutów tabel
 --
-
---
--- Indeksy dla tabeli `productions`
---
-ALTER TABLE `productions`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Indeksy dla tabeli `productions_details`
---
-ALTER TABLE `productions_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `prod_details_production_id` (`production_id`),
-  ADD KEY `prod_details_product_id` (`product_id`);
 
 --
 -- Indeksy dla tabeli `products`
@@ -180,6 +129,21 @@ ALTER TABLE `products`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Indeksy dla tabeli `stock`
+--
+ALTER TABLE `stock`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indeksy dla tabeli `stock_details`
+--
+ALTER TABLE `stock_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `WH_detail_product_id` (`product_id`),
+  ADD KEY `WH_detail_warehouse_id` (`stock_id`);
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
@@ -187,35 +151,8 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `login` (`username`);
 
 --
--- Indeksy dla tabeli `warehouses`
---
-ALTER TABLE `warehouses`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Indeksy dla tabeli `warehouses_details`
---
-ALTER TABLE `warehouses_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `WH_detail_product_id` (`product_id`),
-  ADD KEY `WH_detail_warehouse_id` (`warehouse_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `productions`
---
-ALTER TABLE `productions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `productions_details`
---
-ALTER TABLE `productions_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -224,40 +161,33 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `stock`
+--
+ALTER TABLE `stock`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `stock_details`
+--
+ALTER TABLE `stock_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `warehouses`
---
-ALTER TABLE `warehouses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `warehouses_details`
---
-ALTER TABLE `warehouses_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `productions_details`
+-- Constraints for table `stock_details`
 --
-ALTER TABLE `productions_details`
-  ADD CONSTRAINT `prod_details_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `prod_details_production_id` FOREIGN KEY (`production_id`) REFERENCES `productions` (`id`);
-
---
--- Constraints for table `warehouses_details`
---
-ALTER TABLE `warehouses_details`
+ALTER TABLE `stock_details`
   ADD CONSTRAINT `WH_detail_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `WH_detail_warehouse_id` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`);
+  ADD CONSTRAINT `WH_detail_warehouse_id` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

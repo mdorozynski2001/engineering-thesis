@@ -45,13 +45,11 @@ suspend fun getTableNamesList(table: String): Array<String> {
 
 fun getInventoryId(): Boolean {
     var funResult = false
-    val field = arrayOfNulls<String>(2)
-    field[0] = "InventoryType"
-    field[1] = "InventoryName"
+    val field = arrayOfNulls<String>(1)
+    field[0] = "InventoryName"
 
-    val data = arrayOfNulls<String>(2)
-    data[0] = ActiveInventory.type
-    data[1] = ActiveInventory.name
+    val data = arrayOfNulls<String>(1)
+    data[0] = ActiveInventory.name
     val putData = PutData(
         "http://$IpGlobal/Android/getInventoryTargetData.php",
         "POST",
@@ -81,13 +79,11 @@ fun getInventoryId(): Boolean {
 
 fun getProductsFromInventoryTarget(): Boolean {
     var funResult = false
-    val field = arrayOfNulls<String>(2)
-    field[0] = "InventoryTargetType"
-    field[1] = "InventoryId"
+    val field = arrayOfNulls<String>(1)
+    field[0] = "InventoryId"
 
-    val data = arrayOfNulls<String>(2)
-    data[0] = ActiveInventory.type
-    data[1] = ActiveInventory.id.toString()
+    val data = arrayOfNulls<String>(1)
+    data[0] = ActiveInventory.id.toString()
     val putData = PutData(
         "http://$IpGlobal/Android/getProductsFromInventoryTarget.php",
         "POST",
@@ -134,17 +130,15 @@ fun jsonToProduct(product_json: Map<String, String>): Product {
 fun correctProductNumber(context: Context, realNumber: String, id: Int): Boolean {
     var funResult = false
     if (realNumber.toInt() >= 0) {
-        val field = arrayOfNulls<String>(4)
-        field[0] = "InventoryTargetType"
-        field[1] = "InventoryID"
-        field[2] = "product_id"
-        field[3] = "number"
+        val field = arrayOfNulls<String>(3)
+        field[0] = "InventoryID"
+        field[1] = "product_id"
+        field[2] = "number"
 
-        val data = arrayOfNulls<String>(4)
-        data[0] = ActiveInventory.type
-        data[1] = ActiveInventory.id.toString()
-        data[2] = id.toString()
-        data[3] = realNumber
+        val data = arrayOfNulls<String>(3)
+        data[0] = ActiveInventory.id.toString()
+        data[1] = id.toString()
+        data[2] = realNumber
 
         val putData = PutData(
             "http://$IpGlobal/Android/correctProductNumber.php", "POST", field, data

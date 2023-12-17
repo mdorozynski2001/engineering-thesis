@@ -5,7 +5,6 @@ var IpGlobal = ""
 object ActiveInventory {
     var id : Int = -1
     var name : String = ""
-    var type : String = "" // productions or warehouses
     var allOrRandomProducts : String = "" // AllProducts or RandomProducts
     var productsNumberToInventory : Int = -1
     var productsNumberTotal : Int = -1

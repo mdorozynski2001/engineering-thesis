@@ -52,17 +52,15 @@ class FastInventory : AppCompatActivity() {
                 activeBarcode = collectedBarcode
                 binding.barcode.text = previousBbarcode
 
-                val field = arrayOfNulls<String>(4)
-                field[0] = "InventoryTargetType"
-                field[1] = "InventoryID"
-                field[2] = "productInfo"
-                field[3] = "productInfoType"
+                val field = arrayOfNulls<String>(3)
+                field[0] = "InventoryID"
+                field[1] = "productInfo"
+                field[2] = "productInfoType"
 
-                val data = arrayOfNulls<String>(4)
-                data[0] = ActiveInventory.type
-                data[1] = ActiveInventory.id.toString()
-                data[2] = previousBbarcode
-                data[3] = "barcode"
+                val data = arrayOfNulls<String>(3)
+                data[0] = ActiveInventory.id.toString()
+                data[1] = previousBbarcode
+                data[2] = "barcode"
 
                 val putData = PutData(
                     "http://$IpGlobal/Android/findProduct.php", "POST", field, data

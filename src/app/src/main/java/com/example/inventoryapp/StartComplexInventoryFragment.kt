@@ -21,7 +21,7 @@ import kotlin.random.Random
 class StartComplexInventoryFragment : Fragment() {
     private var requestCamera: ActivityResultLauncher<String>? = null
     private lateinit var binding: FragmentStartComplexInventoryBinding
-    private var namesArray: Array<String> = emptyArray()
+    private var warehouses: Array<String> = emptyArray()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,16 +30,12 @@ class StartComplexInventoryFragment : Fragment() {
         binding = FragmentStartComplexInventoryBinding.inflate(inflater, container, false)
 
         lifecycleScope.launch {
-            val warehouses = getTableNamesList("warehouses")
-            val warehousesNumber = warehouses.size
-            val productions = getTableNamesList("productions")
-            namesArray += warehouses
-            namesArray += productions
+            warehouses += getTableNamesList("stock")
 
             val arrayAdapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                namesArray
+                warehouses
             )
             binding.spinner.adapter = arrayAdapter
             binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -49,17 +45,7 @@ class StartComplexInventoryFragment : Fragment() {
                     p2: Int,
                     p3: Long
                 ) {
-                    if (p2 < warehousesNumber) {
-                        ActiveInventory.type = "warehouses"
-                    } else {
-                        ActiveInventory.type = "productions"
-                    }
-                    ActiveInventory.name = namesArray[p2]
-                    Toast.makeText(
-                        requireContext(),
-                        ActiveInventory.type,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    ActiveInventory.name = warehouses[p2]
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {

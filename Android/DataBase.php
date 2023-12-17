@@ -67,9 +67,8 @@ class DataBase
         } else return false;
     }
 
-    function findProduct($InventoryTargetType, $InventoryID, $productInfo, $productInfoType)
+    function findProduct($InventoryID, $productInfo, $productInfoType)
     {
-        $InventoryTargetType = $this->prepareData($InventoryTargetType);
         $InventoryID = $this->prepareData($InventoryID);
         $productInfo = $this->prepareData($productInfo);
         $productInfoType = $this->prepareData($productInfoType);
@@ -82,35 +81,21 @@ class DataBase
         
         $product =$product_result->fetch_assoc();
 
-        if($InventoryTargetType == "warehouses" || $InventoryTargetType == "productions"){
-            if($InventoryTargetType == "warehouses"){
-                $detail_string = "warehouses_details";
-                $id_string = "warehouse_id";
-            }else{
-                $detail_string = "productions_details";
-                $id_string = "production_id";
-            }
-
-            $this->sql = "SELECT number FROM " .$detail_string. " WHERE " .$id_string. " = '" . $InventoryID . "' AND product_id = '" . $product["id"] . "'";
-            $number_result = mysqli_query($this->connect, $this->sql);
-            $number_row = $number_result->fetch_assoc();
-            if($number_row == NULL){
-                return NULL;
-            }
-            $number = $number_row['number'];
-            $product["number"] = $number;
-            return $product;
-        }
-        else{
+        $this->sql = "SELECT number FROM stock_details WHERE stock_id = '" . $InventoryID . "' AND product_id = '" . $product["id"] . "'";
+        $number_result = mysqli_query($this->connect, $this->sql);
+        $number_row = $number_result->fetch_assoc();
+        if($number_row == NULL){
             return NULL;
         }
+        $number = $number_row['number'];
+        $product["number"] = $number;
+        return $product;
 
     }
 
 
 
-    function correctProductNumber($InventoryTargetType,$InventoryId,$product_id,$number){
-        $InventoryTargetType = $this->prepareData($InventoryTargetType);
+    function correctProductNumber($InventoryId,$product_id,$number){
         $InventoryId = $this->prepareData($InventoryId);
         $product_id = $this->prepareData($product_id);
         $number = $this->prepareData($number);
@@ -124,41 +109,25 @@ class DataBase
         $product_total =$product_total_result->fetch_assoc();
         $product_total_number = $product_total['total_number'];
 
+        $this->sql = "SELECT * FROM stock_details WHERE stock_id = '" . $InventoryId . "' AND product_id = '" . $product_id . "'";
+        $product_result = mysqli_query($this->connect, $this->sql);
+        if ( mysqli_num_rows($product_result) == 0){
+            return false;
+        }
 
-        if($InventoryTargetType == "warehouses" || $InventoryTargetType == "productions")
-        {
-            if($InventoryTargetType == "warehouses"){
-                $detail_string = "warehouses_details";
-                $id_string = "warehouse_id";
-            }else{
-                $detail_string = "productions_details";
-                $id_string = "production_id";
-            }
-
-            $this->sql = "SELECT * FROM " .$detail_string. " WHERE " .$id_string. " = '" . $InventoryId . "' AND product_id = '" . $product_id . "'";
-            $product_result = mysqli_query($this->connect, $this->sql);
-            if ( mysqli_num_rows($product_result) == 0){
-                return false;
-            }
-
-            $product =$product_result->fetch_assoc();
-            $product_number = $product["number"];
-            $product_diff = $product_number - $number;
-            $product_new_total_number = $product_total_number - $product_diff;
-            $this->sql = "UPDATE products SET total_number = '" . $product_new_total_number . "' WHERE id = '" . $product_id . "'";
+        $product =$product_result->fetch_assoc();
+        $product_number = $product["number"];
+        $product_diff = $product_number - $number;
+        $product_new_total_number = $product_total_number - $product_diff;
+        $this->sql = "UPDATE products SET total_number = '" . $product_new_total_number . "' WHERE id = '" . $product_id . "'";
+        if(mysqli_query($this->connect, $this->sql)){
+            $this->sql = "UPDATE stock_details SET number = '" . $number . "' WHERE product_id = '" . $product_id . "' AND stock_id ='" . $InventoryId . "'";
             if(mysqli_query($this->connect, $this->sql)){
-                $this->sql = "UPDATE " .$detail_string. " SET number = '" . $number . "' WHERE product_id = '" . $product_id . "' AND " .$id_string. " ='" . $InventoryId . "'";
-                if(mysqli_query($this->connect, $this->sql)){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+                return true;
             }
             else{
                 return false;
             }
-            
         }
         else{
             return false;
@@ -173,29 +142,19 @@ class DataBase
         return $result;
     }
 
-    function getInventoryTargetData($InventoryType, $InventoryName){
-        $InventoryType = $this->prepareData($InventoryType);
+    function getInventoryTargetData($InventoryName){
         $InventoryName = $this->prepareData($InventoryName);
 
-        $this->sql = "SELECT * FROM " .$InventoryType. " WHERE name = '" .$InventoryName. "'";
+        $this->sql = "SELECT * FROM stock WHERE name = '" .$InventoryName. "'";
         $result = mysqli_query($this->connect, $this->sql);
         return $result;        
     }
 
 
-    function getProductsFromInventoryTarget($InventoryTargetType, $InventoryId){
-        $InventoryTargetType = $this->prepareData($InventoryTargetType);
+    function getProductsFromInventoryTarget($InventoryId){
         $InventoryID = $this->prepareData($InventoryId);
 
-        if($InventoryTargetType == "warehouses"){
-            $detail_string = "warehouses_details";
-            $id_string = "warehouse_id";
-        }else{
-            $detail_string = "productions_details";
-            $id_string = "production_id";
-        }
-
-        $this->sql = "SELECT product_id from " .$detail_string. " WHERE " .$id_string. " = " .$InventoryID. "";
+        $this->sql = "SELECT product_id from stock_details WHERE stock_id = " .$InventoryID. "";
         $result = mysqli_query($this->connect, $this->sql);
         return $result;
     }
