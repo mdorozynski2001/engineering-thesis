@@ -112,7 +112,7 @@
         app:layout_constraintBottom_toTopOf="@id/hor_guideline_5" />
 
     <TextView
-        android:id="@+id/number_in_database"
+        android:id="@+id/amount_in_database"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_barcode"
@@ -127,7 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@id/hor_guideline_6"/>
 
     <EditText
-        android:id="@+id/number_real"
+        android:id="@+id/amount_real"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="5dp"

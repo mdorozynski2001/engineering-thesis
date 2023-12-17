@@ -65,7 +65,7 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/randomProductsNumber"
+        android:id="@+id/randomProductsAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="@string/login_hint"

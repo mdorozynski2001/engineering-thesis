@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2023 at 12:42 PM
+-- Generation Time: Dec 17, 2023 at 02:00 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -24,6 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `stock_id` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `inventory_details`
+--
+
+CREATE TABLE `inventory_details` (
+  `id` int(11) NOT NULL,
+  `inventory_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `amount_start` int(11) NOT NULL,
+  `amount_correct` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `products`
 --
 
@@ -31,7 +58,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `barcode` bigint(11) NOT NULL,
-  `total_number` int(11) NOT NULL,
+  `total_amount` int(11) NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -39,7 +66,7 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `barcode`, `total_number`, `price`) VALUES
+INSERT INTO `products` (`id`, `name`, `barcode`, `total_amount`, `price`) VALUES
 (1, 'AquaFresh triple protection', 5908311868447, 6, 4.99),
 (2, 'Camembert', 4337185526046, 9, 6.99),
 (3, 'milk', 8718951313255, 16, 2.99),
@@ -78,14 +105,14 @@ CREATE TABLE `stock_details` (
   `id` int(11) NOT NULL,
   `stock_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `number` int(11) NOT NULL
+  `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `stock_details`
 --
 
-INSERT INTO `stock_details` (`id`, `stock_id`, `product_id`, `number`) VALUES
+INSERT INTO `stock_details` (`id`, `stock_id`, `product_id`, `amount`) VALUES
 (1, 1, 1, 6),
 (2, 1, 2, 5),
 (3, 2, 2, 4),
@@ -119,6 +146,22 @@ INSERT INTO `users` (`id`, `name`, `surname`, `username`, `password`, `is_active
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id_inventory` (`user_id`),
+  ADD KEY `stock_id_inventory` (`stock_id`);
+
+--
+-- Indeksy dla tabeli `inventory_details`
+--
+ALTER TABLE `inventory_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id_inventory_details` (`product_id`),
+  ADD KEY `inventory_id_inventory_details` (`inventory_id`);
 
 --
 -- Indeksy dla tabeli `products`
@@ -155,6 +198,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `inventory_details`
+--
+ALTER TABLE `inventory_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -181,6 +236,20 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD CONSTRAINT `stock_id_inventory` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`),
+  ADD CONSTRAINT `user_id_inventory` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `inventory_details`
+--
+ALTER TABLE `inventory_details`
+  ADD CONSTRAINT `inventory_id_inventory_details` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`),
+  ADD CONSTRAINT `product_id_inventory_details` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `stock_details`

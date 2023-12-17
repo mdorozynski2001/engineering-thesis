@@ -27,18 +27,18 @@
     <string name="choose_warehous_production">Choose warehouse/production</string>
     <string name="all_products">All products</string>
     <string name="random_products">Random products</string>
-    <string name="random_products_number">Random products number</string>
+    <string name="random_products_amount">Random products amount</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="number_in_db">Number in database</string>
-    <string name="real_number">Real number</string>
+    <string name="amount_in_db">amount in database</string>
+    <string name="real_amount">Real amount</string>
     <string name="x">XXXXXXXXXXX</string>
     <string name="no_product">No product</string>
-    <string name="complex_inventory_description">Choose warehouse or production object. Choose if you want check all products or only random part of them. Put number of products you want to check.Press start to enter complex inventory activity.
-        On next screen you can switch between products. You will see products name and barcode. After successful comparing it with real product using scaner you will be able to corect number in database.
-        Just click scan, enter correct number and press APPlY button to save changes.</string>
+    <string name="complex_inventory_description">Choose warehouse or production object. Choose if you want check all products or only random part of them. Put amount of products you want to check.Press start to enter complex inventory activity.
+        On next screen you can switch between products. You will see products name and barcode. After successful comparing it with real product using scaner you will be able to corect amount in database.
+        Just click scan, enter correct amount and press APPlY button to save changes.</string>
     <string name="fast_innventory_description">Choose warehouse or production object and press Start.
-    On next screen you can scan product and then you will see its name and number in database. If real number is different you can correct it by putting number to box and press "APPLY CHANGES" button.</string>
+    On next screen you can scan product and then you will see its name and amount in database. If real amount is different you can correct it by putting amount to box and press "APPLY CHANGES" button.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

@@ -33,7 +33,7 @@ class ComplexInventory : AppCompatActivity() {
         setTextViews()
 
         binding.buttonNextProduct.setOnClickListener {
-            activeProduct = StrictMath.min(ActiveInventory.productsNumberToInventory-1,activeProduct+1)
+            activeProduct = StrictMath.min(ActiveInventory.productsAmountToInventory-1,activeProduct+1)
             synchronizeProductWithDB(activeProduct)
             setTextViews()
 
@@ -49,7 +49,7 @@ class ComplexInventory : AppCompatActivity() {
             if(collectedBarcode == productsList[activeProduct].barcode){
                 Toast.makeText(this@ComplexInventory,"Product correct", Toast.LENGTH_SHORT).show()
                 binding.applyButton.isEnabled = true
-                binding.numberReal.isEnabled = true
+                binding.amountReal.isEnabled = true
             }
             else{
                 Toast.makeText(this@ComplexInventory,"Product incorrect", Toast.LENGTH_SHORT).show()
@@ -57,10 +57,10 @@ class ComplexInventory : AppCompatActivity() {
         }
 
         binding.applyButton.setOnClickListener {
-            val realNumber = binding.numberReal.text.toString()
-            if(correctProductNumber(this@ComplexInventory, realNumber, productsList[activeProduct].id)) {
+            val realAmount = binding.amountReal.text.toString()
+            if(correctProductAmount(this@ComplexInventory, realAmount, productsList[activeProduct].id)) {
                 synchronizeProductWithDB(activeProduct)
-                binding.dbNumberInfo.text = realNumber
+                binding.dbAmountInfo.text = realAmount
             }
         }
 
@@ -69,17 +69,17 @@ class ComplexInventory : AppCompatActivity() {
     private fun synchronizeProductWithDB(id: Int){
         val product = getProduct(productsList[id].id)
         if (product.id != 0 && product.barcode != ""){
-            productsList[id].number = product.number
-            productsList[id].totalNumber = product.totalNumber
+            productsList[id].amount = product.amount
+            productsList[id].totalAmount = product.totalAmount
         }
     }
 
     private fun setTextViews(){
         binding.productNameView.text = productsList[activeProduct].name
         binding.productBarcodeView.text = productsList[activeProduct].barcode
-        binding.dbNumberInfo.text = productsList[activeProduct].number.toString()
+        binding.dbAmountInfo.text = productsList[activeProduct].amount.toString()
         binding.applyButton.isEnabled = false
-        binding.numberReal.isEnabled = false
+        binding.amountReal.isEnabled = false
     }
 
 
@@ -106,8 +106,8 @@ class ComplexInventory : AppCompatActivity() {
             id = 0,
             name = "",
             barcode = "",
-            number = 0,
-            totalNumber = 0,
+            amount = 0,
+            totalAmount = 0,
             price = 0.0
 
         )

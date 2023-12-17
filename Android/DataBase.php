@@ -81,24 +81,24 @@ class DataBase
         
         $product =$product_result->fetch_assoc();
 
-        $this->sql = "SELECT number FROM stock_details WHERE stock_id = '" . $InventoryID . "' AND product_id = '" . $product["id"] . "'";
-        $number_result = mysqli_query($this->connect, $this->sql);
-        $number_row = $number_result->fetch_assoc();
-        if($number_row == NULL){
+        $this->sql = "SELECT amount FROM stock_details WHERE stock_id = '" . $InventoryID . "' AND product_id = '" . $product["id"] . "'";
+        $amount_result = mysqli_query($this->connect, $this->sql);
+        $amount_row = $amount_result->fetch_assoc();
+        if($amount_row == NULL){
             return NULL;
         }
-        $number = $number_row['number'];
-        $product["number"] = $number;
+        $amount = $amount_row['amount'];
+        $product["amount"] = $amount;
         return $product;
 
     }
 
 
 
-    function correctProductNumber($InventoryId,$product_id,$number){
+    function correctProductAmount($InventoryId,$product_id,$amount){
         $InventoryId = $this->prepareData($InventoryId);
         $product_id = $this->prepareData($product_id);
-        $number = $this->prepareData($number);
+        $amount = $this->prepareData($amount);
 
         $this->sql = "SELECT * FROM products WHERE id = '" . $product_id . "'";
         $product_total_result = mysqli_query($this->connect, $this->sql);
@@ -107,7 +107,7 @@ class DataBase
             return false;
         }
         $product_total =$product_total_result->fetch_assoc();
-        $product_total_number = $product_total['total_number'];
+        $product_total_amount = $product_total['total_amount'];
 
         $this->sql = "SELECT * FROM stock_details WHERE stock_id = '" . $InventoryId . "' AND product_id = '" . $product_id . "'";
         $product_result = mysqli_query($this->connect, $this->sql);
@@ -116,12 +116,12 @@ class DataBase
         }
 
         $product =$product_result->fetch_assoc();
-        $product_number = $product["number"];
-        $product_diff = $product_number - $number;
-        $product_new_total_number = $product_total_number - $product_diff;
-        $this->sql = "UPDATE products SET total_number = '" . $product_new_total_number . "' WHERE id = '" . $product_id . "'";
+        $product_amount = $product["amount"];
+        $product_diff = $product_amount - $amount;
+        $product_new_total_amount = $product_total_amount - $product_diff;
+        $this->sql = "UPDATE products SET total_amount = '" . $product_new_total_amount . "' WHERE id = '" . $product_id . "'";
         if(mysqli_query($this->connect, $this->sql)){
-            $this->sql = "UPDATE stock_details SET number = '" . $number . "' WHERE product_id = '" . $product_id . "' AND stock_id ='" . $InventoryId . "'";
+            $this->sql = "UPDATE stock_details SET amount = '" . $amount . "' WHERE product_id = '" . $product_id . "' AND stock_id ='" . $InventoryId . "'";
             if(mysqli_query($this->connect, $this->sql)){
                 return true;
             }
