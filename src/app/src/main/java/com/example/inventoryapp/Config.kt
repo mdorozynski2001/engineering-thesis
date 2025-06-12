@@ -21,11 +21,3 @@ data class Product(
     var totalAmount: Int,
     var price: Double
 )
-object ActiveProduct {
-    var id: Int = -1
-    var name: String = ""
-    var barcode: String = ""
-    var amount: Int = -1
-    var totalAmount: Int = -1
-    var price: Double = -1.0
-}

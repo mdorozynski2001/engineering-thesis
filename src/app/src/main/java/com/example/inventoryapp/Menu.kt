@@ -58,10 +58,6 @@ class Menu : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
                 startActivity(intent)
                 finish()
             }
-            R.id.nav_exit -> {
-                Toast.makeText(this@Menu, "Exit", Toast.LENGTH_SHORT).show()
-                finish()
-            }
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
