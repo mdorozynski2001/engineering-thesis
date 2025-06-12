@@ -27,6 +27,16 @@ class FastInventory : AppCompatActivity() {
     private var previousBbarcode = ""
     private var activeBarcode = ""
 
+    private var activeProduct = Product(
+        id = 0,
+        name = "",
+        barcode = "",
+        amount = 0,
+        totalAmount = 0,
+        price = 0.0
+
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFastInventoryBinding.inflate(layoutInflater)
@@ -84,16 +94,10 @@ class FastInventory : AppCompatActivity() {
                             val product = gson.fromJson<List<Map<String, String>>>(
                                 result, object : TypeToken<List<Map<String, String>>>() {}.type
                             )
-                            ActiveProduct.id = product[0]["id"]!!.toInt()
-                            ActiveProduct.name = product[0]["name"].toString()
-                            ActiveProduct.barcode = product[0]["barcode"].toString()
-                            ActiveProduct.amount = product[0]["amount"]!!.toInt()
-                            ActiveProduct.totalAmount = product[0]["total_amount"]!!.toInt()
-                            ActiveProduct.price = product[0]["price"]!!.toDouble()
+                            activeProduct = jsonToProduct(product[0])
 
-
-                            binding.nameText.text = ActiveProduct.name
-                            binding.amountInDatabase.text = ActiveProduct.amount.toString()
+                            binding.nameText.text = activeProduct.name
+                            binding.amountInDatabase.text = activeProduct.amount.toString()
                             binding.applyButton.isEnabled = true
                         }
                     }
@@ -103,7 +107,7 @@ class FastInventory : AppCompatActivity() {
 
         binding.applyButton.setOnClickListener {
             val realAmount = binding.amountReal.text.toString()
-            if(correctProductAmount(this@FastInventory, realAmount, ActiveProduct.id)){
+            if(correctProductAmount(this@FastInventory, realAmount, activeProduct.id)){
                 binding.amountInDatabase.text = realAmount
             }
         }

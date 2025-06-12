@@ -20,10 +20,6 @@
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/logout" />
-            <item
-                android:id="@+id/nav_exit"
-                android:icon="@drawable/ic_logout"
-                android:title="@string/exit" />
         </menu>
     </item>
 
